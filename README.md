@@ -27,8 +27,11 @@ add sample playlist with 1 track
 * function "getPlaylists(w)" - 
 get playlists.  if w = 1, write to file
 
+* function "getPlaylistId(plName)" - 
+pass in name of Playlist to get the ID so can edit it. 
+
 * function "deletePl(plId)" - 
-Delete Playlists
+Deletes Playlist with plId
 
 * function "addTrack(plId, songTitle)" - 
 pass in playlistID and songTitle to add
