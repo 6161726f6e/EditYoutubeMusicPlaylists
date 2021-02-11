@@ -13,7 +13,7 @@
 
 from ytmusicapi import YTMusic
 
-ytmusic = YTMusic('headers_auth.json')    #start session
+ytmusic = YTMusic("headers_auth.json")    #start session
 
 def samplePl():
 #add sample playlist with 1 track
@@ -26,7 +26,7 @@ def getPlaylists(w):
 # get playlists.  if w = 1, write to file
 	myPlaylistsDict=ytmusic.get_library_playlists(limit=250)
 	#print(myPlaylistsDict[0])
-	#print(myPlaylistsDict['title'])
+	#print(myPlaylistsDict["title"])
 	if w==1:
 		f = open("playlistIDs.txt", "a")
 	for i in myPlaylistsDict:
@@ -39,16 +39,16 @@ def getPlaylists(w):
 		f.close()
 
 def getPlaylistId(plName):
-# get playlist ID by name.  Then you can edit it.
+# get playlist Id by name.  Then you can edit it.
 	myPlaylistsDict=ytmusic.get_library_playlists(limit=250)
 	#print(myPlaylistsDict[0])
-	#print(myPlaylistsDict['title'])
+	#print(myPlaylistsDict["title"])
 	for i in myPlaylistsDict:
 		if i["title"].lower() == plName.lower():
 			print("Getting Playlist ID...")
-			print(i["title"], "=",i['playlistId'])
+			print(i["title"], "=",i["playlistId"])
 			print("-------------------------")
-			return(i['playlistId'])
+			return(i["playlistId"])
 
 def deletePl(plId):
 # Delete Playlist by ID
@@ -59,7 +59,7 @@ def addTrack(plId, songTitle):
 # pass in playlistID and songTitle to add
 	search_results = ytmusic.search(songTitle)
 	print("Adding song ", songTitle)
-	ytmusic.add_playlist_items(plId, [search_results[0]['videoId']])
+	ytmusic.add_playlist_items(plId, [search_results[0]["videoId"]])
 
 def deleteTrackByTitle(plId, songTitle):
 # pass in playlistID and songTitle to delete
@@ -88,15 +88,34 @@ def deleteTracksByArtist(plId, artistName):
 				ytmusic.remove_playlist_items(playlistId=plId, \
 					videos=[i])
 
+def addAlbumToPl(plId, albumString):
+	search_results = ytmusic.search(query=albumString, filter="albums")
+	print(search_results[0])
+	browseID=search_results[0]["browseId"]
+	print("found album named ",search_results[0]["title"])
+	print("browseId = ",browseID)
+	search_results = ytmusic.get_album(browseID)
+	print("Tracks on Album = ", search_results["trackCount"])
+	for i in search_results["tracks"]:
+		print("Adding song ", i["title"], "to playlist ")
+		#print("videoID = ", i["videoId"])
+		ytmusic.add_playlist_items(plId, [i["videoId"]])
 
-## Get list of all your PLs
+######## Get list of all your PLs
 #getPlaylists(0)
 
-## Create new Pl or edit existing one
+######## Create new Pl or edit existing one
 #pl2edit=samplePl()
 pl2edit=getPlaylistId("pr0Gr4mm1ng")
 
-## Add tracks to PL
+######## Add entire album to PL
+addAlbumToPl(pl2edit,"the prodigy the day is my enemy")
+
+######## Add tracks to PL
+#addTrack(pl2edit, "life's work dual core")
+#addTrack(pl2edit, "dangerous ways dual core")
+#addTrack(pl2edit, "I Remember dual core")
+#addTrack(pl2edit, "Here to Help dual core")
 #addTrack(pl2edit, "Breathe Prodigy")
 #addTrack(pl2edit, "Elysian Feels The Future Sound Of London")
 #addTrack(pl2edit, "Fortune Days The Glitch Mob")
@@ -111,9 +130,9 @@ pl2edit=getPlaylistId("pr0Gr4mm1ng")
 #addTrack(pl2edit, "raise your weapon deadmau5")
 #addTrack(pl2edit, "Keep Hope Alive (Trip Hope mix) The Crystal Method")
 
-## Delete tracks from PL
-#deleteTrackByTitle(pl2edit, "Keep It Clean (Original Mix)")
-#deleteTracksByArtist(pl2edit, "Dual Core")
+######## Delete tracks from PL
+#deleteTracksByArtist(pl2edit, "dUAl cORe")
+#deleteTrackByTitle(pl2edit, "aLl thE tHingS")
 
-## Delete entire PL
+######## Delete entire PL
 #deletePl(pl2edit)
