@@ -44,13 +44,15 @@ def getPlaylistId(plName):
 	#print(myPlaylistsDict[0])
 	#print(myPlaylistsDict['title'])
 	for i in myPlaylistsDict:
-		if i["title"] == plName:
-			print(i["title"], i['playlistId'])
+		if i["title"].lower() == plName.lower():
+			print("Getting Playlist ID...")
+			print(i["title"], "=",i['playlistId'])
 			print("-------------------------")
 			return(i['playlistId'])
 
 def deletePl(plId):
-# Delete Playlists
+# Delete Playlist by ID
+	print("Deleting playlist with ID", plId)
 	ytmusic.delete_playlist(plId)
 
 def addTrack(plId, songTitle):
@@ -63,7 +65,7 @@ def deleteTrackByTitle(plId, songTitle):
 # pass in playlistID and songTitle to delete
 	playlist=ytmusic.get_playlist(playlistId=plId, limit=6000)
 	for i in playlist["tracks"]:
-		if i["title"] == songTitle:
+		if i["title"].lower() == songTitle.lower():
 			print(i["videoId"], ": ", i["setVideoId"])
 			videoId=i["videoId"]
 			setVideoId=i["setVideoId"]
@@ -78,7 +80,7 @@ def deleteTracksByArtist(plId, artistName):
 	for i in playlist["tracks"]:
 		for j in i["artists"]:
 			#print(j["name"])
-			if j["name"] == artistName:
+			if j["name"].lower() == artistName.lower():
 				print(i["videoId"], ": ", i["setVideoId"])
 				videoId=i["videoId"]
 				setVideoId=i["setVideoId"]
@@ -92,15 +94,26 @@ def deleteTracksByArtist(plId, artistName):
 
 ## Create new Pl or edit existing one
 #pl2edit=samplePl()
-pl2edit=getPlaylistId("SamplePL")
+pl2edit=getPlaylistId("pr0Gr4mm1ng")
 
 ## Add tracks to PL
-addTrack(pl2edit, "Breathe Prodigy")
-addTrack(pl2edit, "Elysian Feels The Future Sound Of London")
+#addTrack(pl2edit, "Breathe Prodigy")
+#addTrack(pl2edit, "Elysian Feels The Future Sound Of London")
+#addTrack(pl2edit, "Fortune Days The Glitch Mob")
+#addTrack(pl2edit, "Papua New Guinea The Future Sound of London")
+#addTrack(pl2edit, "Obsidian (feat. Jennifer Folker) Banco de Gaia")
+#addTrack(pl2edit, "True Grit The Crystal Method")
+#addTrack(pl2edit, "Xinobi Day Off Anoraak Remix")
+#addTrack(pl2edit, "I Remember (Vocal Mix) deadmau5")
+#addTrack(pl2edit, "strobe deadmau5")
+#addTrack(pl2edit, "Ghosts 'n' Stuff (feat. Rob Swire) deadmau5")
+#addTrack(pl2edit, "monophobia deadmau5")
+#addTrack(pl2edit, "raise your weapon deadmau5")
+#addTrack(pl2edit, "Keep Hope Alive (Trip Hope mix) The Crystal Method")
 
 ## Delete tracks from PL
-#deleteTrackByTitle(newPl, "All the Things Dual Core")
-#deleteTracksByArtist(newPl, "Dual Core")
+#deleteTrackByTitle(pl2edit, "Keep It Clean (Original Mix)")
+#deleteTracksByArtist(pl2edit, "Dual Core")
 
 ## Delete entire PL
-#deletePl(newPl)
+#deletePl(pl2edit)
