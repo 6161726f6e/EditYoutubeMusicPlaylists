@@ -33,8 +33,8 @@ pass in name of Playlist to get the ID so can edit it.
 * function "deletePl(plId)" - 
 Deletes Playlist with playlistId.
 
-* function "addTrack(plId, songTitle)" - 
-pass in playlistID and songTitle to add.
+* function "addTracks(plId, songTitles)" - 
+pass in playlistID and songTitles (as list) to add.
 
 * function "addAlbumToPl(plId, albumString)" - 
 pass in playlistId and album search string to add all songs from that album to a Playlist.
