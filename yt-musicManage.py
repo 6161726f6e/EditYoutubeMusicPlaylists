@@ -82,9 +82,9 @@ def deleteTracksByArtist(plId, artistName):
 				ytmusic.remove_playlist_items(playlistId=plId, \
 					videos=[i])
 
-def addTracks(plId, songTitle):
+def addTracks(plId, songTitles):
 # pass in playlistID and songTitles (as list) to add
-	for i in songTitle:
+	for i in songTitles:
 		search_results = ytmusic.search(i)
 		print("Adding song:", i)
 		ytmusic.add_playlist_items(plId, [search_results[0]["videoId"]])
@@ -110,7 +110,7 @@ def addAlbumToPl(plId, albumString):
 pl2edit=getPlaylistId("pr0Gr4mm1ng")
 
 ######## Add entire album to PL
-#addAlbumToPl(pl2edit,"the prodigy charly")
+#addAlbumToPl(pl2edit,"the prodigy fat of the land")
 
 ######## Add tracks to PL
 addTracks(pl2edit, ["the prodigy break & enter", "the prodigy thunder", "the prodigy one love"])
