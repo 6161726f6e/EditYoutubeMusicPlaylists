@@ -55,12 +55,6 @@ def deletePl(plId):
 	print("Deleting playlist with ID", plId)
 	ytmusic.delete_playlist(plId)
 
-def addTrack(plId, songTitle):
-# pass in playlistID and songTitle to add
-	search_results = ytmusic.search(songTitle)
-	print("Adding song ", songTitle)
-	ytmusic.add_playlist_items(plId, [search_results[0]["videoId"]])
-
 def deleteTrackByTitle(plId, songTitle):
 # pass in playlistID and songTitle to delete
 	playlist=ytmusic.get_playlist(playlistId=plId, limit=6000)
@@ -84,9 +78,16 @@ def deleteTracksByArtist(plId, artistName):
 				print(i["videoId"], ": ", i["setVideoId"])
 				videoId=i["videoId"]
 				setVideoId=i["setVideoId"]
-				print("Deleting song ", i["title"], j["name"])
+				print("Deleting song \"", i["title"], j["name"],"\"")
 				ytmusic.remove_playlist_items(playlistId=plId, \
 					videos=[i])
+
+def addTracks(plId, songTitle):
+# pass in playlistID and songTitles (as list) to add
+	for i in songTitle:
+		search_results = ytmusic.search(i)
+		print("Adding song:", i)
+		ytmusic.add_playlist_items(plId, [search_results[0]["videoId"]])
 
 def addAlbumToPl(plId, albumString):
 	search_results = ytmusic.search(query=albumString, filter="albums")
@@ -97,7 +98,7 @@ def addAlbumToPl(plId, albumString):
 	search_results = ytmusic.get_album(browseID)
 	print("Tracks on Album = ", search_results["trackCount"])
 	for i in search_results["tracks"]:
-		print("Adding song ", i["title"], "to playlist ")
+		print("Adding song:", i["title"])
 		#print("videoID = ", i["videoId"])
 		ytmusic.add_playlist_items(plId, [i["videoId"]])
 
@@ -109,26 +110,10 @@ def addAlbumToPl(plId, albumString):
 pl2edit=getPlaylistId("pr0Gr4mm1ng")
 
 ######## Add entire album to PL
-addAlbumToPl(pl2edit,"the prodigy the day is my enemy")
+#addAlbumToPl(pl2edit,"the prodigy charly")
 
 ######## Add tracks to PL
-#addTrack(pl2edit, "life's work dual core")
-#addTrack(pl2edit, "dangerous ways dual core")
-#addTrack(pl2edit, "I Remember dual core")
-#addTrack(pl2edit, "Here to Help dual core")
-#addTrack(pl2edit, "Breathe Prodigy")
-#addTrack(pl2edit, "Elysian Feels The Future Sound Of London")
-#addTrack(pl2edit, "Fortune Days The Glitch Mob")
-#addTrack(pl2edit, "Papua New Guinea The Future Sound of London")
-#addTrack(pl2edit, "Obsidian (feat. Jennifer Folker) Banco de Gaia")
-#addTrack(pl2edit, "True Grit The Crystal Method")
-#addTrack(pl2edit, "Xinobi Day Off Anoraak Remix")
-#addTrack(pl2edit, "I Remember (Vocal Mix) deadmau5")
-#addTrack(pl2edit, "strobe deadmau5")
-#addTrack(pl2edit, "Ghosts 'n' Stuff (feat. Rob Swire) deadmau5")
-#addTrack(pl2edit, "monophobia deadmau5")
-#addTrack(pl2edit, "raise your weapon deadmau5")
-#addTrack(pl2edit, "Keep Hope Alive (Trip Hope mix) The Crystal Method")
+addTracks(pl2edit, ["the prodigy break & enter", "the prodigy thunder", "the prodigy one love"])
 
 ######## Delete tracks from PL
 #deleteTracksByArtist(pl2edit, "dUAl cORe")
