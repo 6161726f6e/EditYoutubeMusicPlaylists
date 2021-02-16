@@ -9,6 +9,8 @@
 # Author: Aaron Dhiman
 # Reference: uses this awesome YTMusic API: 
 #     https://ytmusicapi.readthedocs.io/en/latest/index.html
+# To Do: Add playlists to other PLs.  Enable Thumbs Up for songs/PLs.
+#        Add Command Line
 ###################################################################################
 
 from ytmusicapi import YTMusic
@@ -89,9 +91,16 @@ def addTracks(plId, songTitles):
 		print("Adding song:", i)
 		ytmusic.add_playlist_items(plId, [search_results[0]["videoId"]])
 
+def likeTracks(songTitles):
+# pass in playlistID and songTitles (as list) to add
+	for i in songTitles:
+		search_results = ytmusic.search(i)
+		print("Liking song:", i)
+		ytmusic.rate_song(videoId=search_results[0]["videoId"], rating="LIKE")
+
 def addAlbumToPl(plId, albumString):
 	search_results = ytmusic.search(query=albumString, filter="albums")
-	print(search_results[0])
+	#print(search_results[0])
 	browseID=search_results[0]["browseId"]
 	print("found album named ",search_results[0]["title"])
 	print("browseId = ",browseID)
@@ -107,17 +116,20 @@ def addAlbumToPl(plId, albumString):
 
 ######## Create new Pl or edit existing one
 #pl2edit=samplePl()
-pl2edit=getPlaylistId("pr0Gr4mm1ng")
+#pl2edit=getPlaylistId("pr0Gr4mm1ng")
 
 ######## Add entire album to PL
-#addAlbumToPl(pl2edit,"the prodigy fat of the land")
+#addAlbumToPl(pl2edit,"deadmau5 For Lack of a Better Name (The Extended Mixes)")
 
 ######## Add tracks to PL
-addTracks(pl2edit, ["the prodigy break & enter", "the prodigy thunder", "the prodigy one love"])
+#addTracks(pl2edit, ["the prodigy break & enter", "the prodigy thunder", "the prodigy one love"])
+
+######## Like Tracks
+likeTracks(["the crystal method born to slow", "the prodigy thunder", "the prodigy one love"])
 
 ######## Delete tracks from PL
 #deleteTracksByArtist(pl2edit, "dUAl cORe")
-#deleteTrackByTitle(pl2edit, "aLl thE tHingS")
+#deleteTrackByTitle(pl2edit, "invaders must die")
 
 ######## Delete entire PL
 #deletePl(pl2edit)

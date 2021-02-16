@@ -45,3 +45,6 @@ pass in playlistID and songTitle to delete.
 * function "deleteTracksByArtist(plId, artistName)" - 
  pass in playlistID and Artist Name to delete.
  WARNING: Deletes all songs by that artist in the playlist.
+
+* function "likeTracks([songTitles])" - 
+pass in list of songs to like (thumbs up).
