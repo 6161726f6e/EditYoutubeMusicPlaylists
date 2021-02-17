@@ -39,6 +39,10 @@ pass in playlistID and songTitles (as list) to add.
 * function "addAlbumToPl(plId, albumString)" - 
 pass in playlistId and album search string to add all songs from that album to a Playlist.
 
+* function "addPl2PL(plFrom, plTo)" - 
+add all songs from a public source playlist to your library playlist.
+pass in args as strings.
+
 * function "deleteTrackByTitle(plId, songTitle)" - 
 pass in playlistID and songTitle to delete.
 
@@ -49,6 +53,7 @@ WARNING: Deletes all songs by that artist in the playlist.
 * function "likeTracks([songTitles])" - 
 pass in list of songs to like (thumbs up).
 
-* function "addPl2PL(plFrom, plTo)" - 
-add all songs from a public source playlist to your library playlist.
-pass in args as strings.
+* function "likeAllTracks(pl)" - 
+pass in playlist name to like (thumbs up) all tracks in it.
+
+

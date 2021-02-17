@@ -9,8 +9,8 @@
 # Author: Aaron Dhiman
 # Reference: uses this awesome YTMusic API: 
 #     https://ytmusicapi.readthedocs.io/en/latest/index.html
-# To Do: List all songs in a PL.  Enable Thumbs Up for all songs in a PL.
-#        Add Command Line.  Maybe allow partial match on song titles for add/delete/like.
+# To Do: List all songs in a PL. Add Command Line.  Maybe allow partial match on
+# 		 song titles for add/delete/like. Auto-like songs when adding to a PL.
 ###################################################################################
 
 from ytmusicapi import YTMusic
@@ -133,36 +133,47 @@ def addAlbumToPl(plId, albumString):
 		ytmusic.add_playlist_items(plId, [i["videoId"]])
 
 def likeTracks(songTitles):
-# pass in playlistID and songTitles (as list) to add
+# pass in songTitles (as list) to like
 	for i in songTitles:
 		search_results = ytmusic.search(i)
-		print("Liking song:", i)
+		print("Liking song:", search_results[0]["title"])
 		print("-------------------------")
 		ytmusic.rate_song(videoId=search_results[0]["videoId"], rating="LIKE")
 
+def likeAllTracks(pl):
+# pass in playlist name to like all songs in the PL
+	pl2edit=getPlaylistId(pl)
+	plDict=ytmusic.get_playlist(pl2edit,limit=1000)
+	for i in plDict["tracks"]:
+		print("Liking song:", i["title"])
+		print("-------------------------")
+		ytmusic.rate_song(videoId=i["videoId"], rating="LIKE")
 
-######## Get list of all your PLs
+######## GET list of all your PLs
 #getPlaylists(0)
 
-######## Create new Pl or edit existing one
+######## CREATE new Pl or edit existing one
 #pl2edit=samplePl()
 #pl2edit=getPlaylistId("pr0Gr4mm1ng")
+#pl2edit=getPlaylistId("Cmptr")
 #pl2edit=getPlaylistId("1st Wave Alternative")
 
-######## Add entire public PL to your library PL
-addPl2Pl("Chroma","Cmptr")
+######## ADD entire public PL to your library PL
+#addPl2Pl("Chroma","Cmptr")
 
-######## Add entire album to PL
-#addAlbumToPl(pl2edit,"deadmau5 For Lack of a Better Name (The Extended Mixes)")
+######## ADD entire album to PL
+#addAlbumToPl(pl2edit,"eric prydz opus")
 
-######## Add tracks to PL
-#addTracks(pl2edit, ["GO gaullin", "ready steady go oakenfold", "bass ass rogue the crystal method", "jupiter shift the crystal method"])
-######## Like Tracks
-#likeTracks(["the crystal method born to slow", "twilight om unit"])
+######## ADD tracks to PL
+#addTracks(pl2edit, ["dual core life's work"])
 
-######## Delete tracks from PL
+######## LIKE Tracks
+#likeTracks(["Liam eric prydz"])
+likeAllTracks("pr0Gr4mm1ng")
+
+######## DELETE tracks from PL
 #deleteTracksByArtist(pl2edit, "dUAl cORe")
-#deleteTrackByTitle(pl2edit, "pet shop boys - so hard (hd)")
+#deleteTrackByTitle(pl2edit, "Two Weeks")
 
-######## Delete entire PL
+######## DELETE entire PL
 #deletePl(pl2edit)
