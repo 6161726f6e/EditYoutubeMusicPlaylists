@@ -10,7 +10,7 @@
 # Reference: uses this awesome YTMusic API: 
 #     https://ytmusicapi.readthedocs.io/en/latest/index.html
 # To Do: List all songs in a PL. Add Command Line.  Maybe allow partial match on
-# 		 song titles for add/delete/like. Auto-like songs when adding to a PL.
+# 		 song titles for add/delete/like.
 ###################################################################################
 
 from ytmusicapi import YTMusic
@@ -99,9 +99,11 @@ def addTracks(plId, songTitles):
 		search_results = ytmusic.search(i)
 		print("Adding song:", i, ", videoId =", search_results[0]["videoId"])
 		print("To your Playlist:", plId)
+		print("Liking song:", i)
 		print("-------------------------")
 		#print(search_results[0])
 		ytmusic.add_playlist_items(plId, [search_results[0]["videoId"]])
+		ytmusic.rate_song(videoId=search_results[0]["videoId"], rating="LIKE")
 
 def addPl2Pl(plFrom, plTo):
 	#pl2edit=getPlaylistId("1st Wave Alternative")
@@ -114,8 +116,11 @@ def addPl2Pl(plFrom, plTo):
 		print("Adding song:", i["title"])
 		print("To your Playlist:", plTo)
 		print("videoID = ", i["videoId"])
+		print("Liking song:", i["title"])
 		print("-------------------------")
 		ytmusic.add_playlist_items(pl2edit, [i["videoId"]])
+		ytmusic.rate_song(videoId=i["videoId"], rating="LIKE")
+
 
 def addAlbumToPl(plId, albumString):
 	search_results = ytmusic.search(query=albumString, filter="albums")
@@ -127,10 +132,12 @@ def addAlbumToPl(plId, albumString):
 	print("Tracks on Album = ", search_results["trackCount"])
 	for i in search_results["tracks"]:
 		print("Adding song:", i["title"])
-		print("To your Plalist:", plId)
+		print("To your Playlist:", plId)
+		print("Liking song:", i["title"])
 		#print("videoID = ", i["videoId"])
 		print("-------------------------")
 		ytmusic.add_playlist_items(plId, [i["videoId"]])
+		ytmusic.rate_song(videoId=i["videoId"], rating="LIKE")
 
 def likeTracks(songTitles):
 # pass in songTitles (as list) to like
@@ -154,26 +161,26 @@ def likeAllTracks(pl):
 
 ######## CREATE new Pl or edit existing one
 #pl2edit=samplePl()
-#pl2edit=getPlaylistId("pr0Gr4mm1ng")
+pl2edit=getPlaylistId("pr0Gr4mm1ng")
 #pl2edit=getPlaylistId("Cmptr")
-#pl2edit=getPlaylistId("1st Wave Alternative")
+#pl2edit=getPlaylistId("Classical")
 
 ######## ADD entire public PL to your library PL
-#addPl2Pl("Chroma","Cmptr")
+#addPl2Pl("Moullinex & Xinobi - Boiler Room - playlist","pr0Gr4mm1ng")
 
 ######## ADD entire album to PL
-#addAlbumToPl(pl2edit,"eric prydz opus")
+addAlbumToPl(pl2edit,"xinobi on the quiet")
 
 ######## ADD tracks to PL
-#addTracks(pl2edit, ["dual core life's work"])
-
-######## LIKE Tracks
-#likeTracks(["Liam eric prydz"])
-likeAllTracks("pr0Gr4mm1ng")
+#addTracks(pl2edit, ["Far Away Place (Jody Wisternoff & James Grant Remix)"])
 
 ######## DELETE tracks from PL
 #deleteTracksByArtist(pl2edit, "dUAl cORe")
-#deleteTrackByTitle(pl2edit, "Two Weeks")
+#deleteTrackByTitle(pl2edit, "block rockin' beats")
 
 ######## DELETE entire PL
 #deletePl(pl2edit)
+
+######## LIKE Tracks
+#likeTracks(["Liam eric prydz"])
+#likeAllTracks("pr0Gr4mm1ng")
