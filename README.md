@@ -27,6 +27,9 @@ add sample playlist with 1 track
 * function "getPlaylists(w)" - 
 get playlists.  if w = 1, write to file.
 
+* function "getPlaylistTracks(plName)" - 
+pass in name of a Playlist to list all tracks, artists, and track count.
+
 * function "getPlaylistId(plName)" - 
 pass in name of Playlist to get the ID so can edit it. 
 
@@ -55,5 +58,4 @@ pass in list of songs to like (thumbs up).
 
 * function "likeAllTracks(pl)" - 
 pass in playlist name to like (thumbs up) all tracks in it.
-
 

@@ -9,8 +9,8 @@
 # Author: Aaron Dhiman
 # Reference: uses this awesome YTMusic API: 
 #     https://ytmusicapi.readthedocs.io/en/latest/index.html
-# To Do: List all songs in a PL. Add Command Line.  Maybe allow partial match on
-# 		 song titles for add/delete/like.
+# To Do: Add Command Line.  Maybe allow partial match on  song titles for
+#		 add/delete/like.
 ###################################################################################
 
 from ytmusicapi import YTMusic
@@ -61,6 +61,17 @@ def getPublicPlaylistId(plName):
 	print("-------------------------")
 	return(publicPlaylistsDict[0]["browseId"])
 
+def getPlaylistTracks(plName):
+# pass in a library playlist name to print all songs to console
+	pl2list=getPlaylistId(plName)
+	plTrax=ytmusic.get_playlist(pl2list, 1000)
+	print("Retrieving songs from Playlist", plName)
+	for i in plTrax["tracks"]:
+		print(i["title"], "by", i["artists"][0]["name"])
+		print("-------------------------")
+	print("-------------------------")
+	print(plTrax["trackCount"], "songs in playlist", plName)
+
 def deletePl(plId):
 # Delete Playlist by ID
 	print("Deleting playlist with ID", plId)
@@ -106,11 +117,9 @@ def addTracks(plId, songTitles):
 		ytmusic.rate_song(videoId=search_results[0]["videoId"], rating="LIKE")
 
 def addPl2Pl(plFrom, plTo):
-	#pl2edit=getPlaylistId("1st Wave Alternative")
 	pl2add=getPublicPlaylistId(plFrom)
 	pl2edit=getPlaylistId(plTo)
 	plTrax=ytmusic.get_playlist(pl2add, 1000)
-	#print(search_results[0])
 	print("Adding", "songs from Playlist", plFrom, "to your Playlist", plTo)
 	for i in plTrax["tracks"]:
 		print("Adding song:", i["title"])
@@ -161,7 +170,7 @@ def likeAllTracks(pl):
 
 ######## CREATE new Pl or edit existing one
 #pl2edit=samplePl()
-pl2edit=getPlaylistId("pr0Gr4mm1ng")
+#pl2edit=getPlaylistId("pr0Gr4mm1ng")
 #pl2edit=getPlaylistId("Cmptr")
 #pl2edit=getPlaylistId("Classical")
 
@@ -169,14 +178,14 @@ pl2edit=getPlaylistId("pr0Gr4mm1ng")
 #addPl2Pl("Moullinex & Xinobi - Boiler Room - playlist","pr0Gr4mm1ng")
 
 ######## ADD entire album to PL
-addAlbumToPl(pl2edit,"xinobi on the quiet")
+#addAlbumToPl(pl2edit,"xinobi on the quiet")
 
 ######## ADD tracks to PL
 #addTracks(pl2edit, ["Far Away Place (Jody Wisternoff & James Grant Remix)"])
 
 ######## DELETE tracks from PL
 #deleteTracksByArtist(pl2edit, "dUAl cORe")
-#deleteTrackByTitle(pl2edit, "block rockin' beats")
+#deleteTrackByTitle(pl2edit, "Over It (feat. Dia Frampton)")
 
 ######## DELETE entire PL
 #deletePl(pl2edit)
@@ -184,3 +193,6 @@ addAlbumToPl(pl2edit,"xinobi on the quiet")
 ######## LIKE Tracks
 #likeTracks(["Liam eric prydz"])
 #likeAllTracks("pr0Gr4mm1ng")
+
+######## LIKE Tracks
+getPlaylistTracks("pr0Gr4mm1ng")
