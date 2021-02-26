@@ -1,0 +1,3 @@
+ytmusicapi
+fuzzywuzzy
+python-Levenshtein

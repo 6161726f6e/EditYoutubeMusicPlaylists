@@ -9,12 +9,11 @@
 # Author: Aaron Dhiman
 # Reference: uses this awesome YTMusic API: 
 #     https://ytmusicapi.readthedocs.io/en/latest/index.html
-# To Do: Add Command Line.  Maybe allow partial match on  song titles for
-#		 add/delete/like.
+# To Do: Add Command Line. Add song list to multiple playlists at once.
 ###################################################################################
 
 from ytmusicapi import YTMusic
-
+from fuzzywuzzy import fuzz
 ytmusic = YTMusic("headers_auth.json")    #start session
 
 def samplePl():
@@ -69,8 +68,8 @@ def getPlaylistTracks(plName):
 	for i in plTrax["tracks"]:
 		print(i["title"], "by", i["artists"][0]["name"])
 		print("-------------------------")
-	print("-------------------------")
-	print(plTrax["trackCount"], "songs in playlist", plName)
+	print("=========================\n")
+	print(plTrax["trackCount"], "songs in playlist", plName, "\n")
 
 def deletePl(plId):
 # Delete Playlist by ID
@@ -81,8 +80,11 @@ def deleteTrackByTitle(plId, songTitle):
 # pass in playlistID and songTitle to delete
 	playlist=ytmusic.get_playlist(playlistId=plId, limit=6000)
 	for i in playlist["tracks"]:
-		if i["title"].lower() == songTitle.lower():
-			print(i["videoId"], ": ", i["setVideoId"])
+		fuzzRatio = fuzz.ratio(i["title"].lower(), songTitle.lower())
+		if fuzzRatio >= 70:
+		#if i["title"].lower() == songTitle.lower():
+			#print(i["videoId"], ": ", i["setVideoId"])
+			print(i["title"].lower(), 'Song Title Match Ratio =', fuzzRatio)
 			videoId=i["videoId"]
 			setVideoId=i["setVideoId"]
 			print("Deleting song ", songTitle)
@@ -97,10 +99,10 @@ def deleteTracksByArtist(plId, artistName):
 		for j in i["artists"]:
 			#print(j["name"])
 			if j["name"].lower() == artistName.lower():
-				print(i["videoId"], ": ", i["setVideoId"])
+				#print(i["videoId"], ": ", i["setVideoId"])
 				videoId=i["videoId"]
 				setVideoId=i["setVideoId"]
-				print("Deleting song \"", i["title"], j["name"],"\"")
+				print("Deleting song \""+str(i["title"])+"\" by"+str(j["name"]))
 				ytmusic.remove_playlist_items(playlistId=plId, \
 					videos=[i])
 
@@ -123,8 +125,8 @@ def addPl2Pl(plFrom, plTo):
 	print("Adding", "songs from Playlist", plFrom, "to your Playlist", plTo)
 	for i in plTrax["tracks"]:
 		print("Adding song:", i["title"])
-		print("To your Playlist:", plTo)
-		print("videoID = ", i["videoId"])
+		print("To your Playlist:", plTo, "(", pl2edit, ")")
+		#print("videoID = ", i["videoId"])
 		print("Liking song:", i["title"])
 		print("-------------------------")
 		ytmusic.add_playlist_items(pl2edit, [i["videoId"]])
@@ -136,9 +138,10 @@ def addAlbumToPl(plId, albumString):
 	#print(search_results[0])
 	browseID=search_results[0]["browseId"]
 	print("found album named ",search_results[0]["title"])
-	print("browseId = ",browseID)
+	#print("browseId = ",browseID)
 	search_results = ytmusic.get_album(browseID)
 	print("Tracks on Album = ", search_results["trackCount"])
+	print("-------------------------")
 	for i in search_results["tracks"]:
 		print("Adding song:", i["title"])
 		print("To your Playlist:", plId)
@@ -170,29 +173,29 @@ def likeAllTracks(pl):
 
 ######## CREATE new Pl or edit existing one
 #pl2edit=samplePl()
-#pl2edit=getPlaylistId("pr0Gr4mm1ng")
-#pl2edit=getPlaylistId("Cmptr")
+pl2edit=getPlaylistId("pr0Gr4mm1ng")
+#pl2edit=getPlaylistId("H3")
 #pl2edit=getPlaylistId("Classical")
 
 ######## ADD entire public PL to your library PL
-#addPl2Pl("Moullinex & Xinobi - Boiler Room - playlist","pr0Gr4mm1ng")
+#addPl2Pl("Stay Low and Build","H3")
 
 ######## ADD entire album to PL
-#addAlbumToPl(pl2edit,"xinobi on the quiet")
+#addAlbumToPl(pl2edit,"Alchemy Willaris. K")
 
 ######## ADD tracks to PL
-#addTracks(pl2edit, ["Far Away Place (Jody Wisternoff & James Grant Remix)"])
+#addTracks(pl2edit, ["gili meno xinobi"])
 
 ######## DELETE tracks from PL
-#deleteTracksByArtist(pl2edit, "dUAl cORe")
-#deleteTrackByTitle(pl2edit, "Over It (feat. Dia Frampton)")
+#deleteTracksByArtist(pl2edit, "dual core")
+deleteTrackByTitle(pl2edit, "lost in mind volen sentir")
 
 ######## DELETE entire PL
 #deletePl(pl2edit)
 
 ######## LIKE Tracks
 #likeTracks(["Liam eric prydz"])
-#likeAllTracks("pr0Gr4mm1ng")
+#likeAllTracks("syn7h")
 
-######## LIKE Tracks
-getPlaylistTracks("pr0Gr4mm1ng")
+######## GET Playlist Tracks
+#getPlaylistTracks("pr0Gr4mm1ng")
