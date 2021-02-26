@@ -28,6 +28,7 @@
 * git clone https://github.com/6161726f6e/EditYoutubeMusicPlaylists.git
 * pip3 install -r requirements.txt
 
+## Features
 I've implemented functions to work with playlists, and will be adding more functionality later.
 For now, just call the functions from the program.
 
