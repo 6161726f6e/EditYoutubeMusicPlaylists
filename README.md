@@ -3,7 +3,7 @@
 
 **The Youtubemusic GUI doesn't work for such large playlists.  Luckily, I found a cool API for it (https://github.com/sigma67/ytmusicapi).**
 
-**This program allows managing your music library (see full list of options below).  I mostly use this app now to manage my playlists.  It makes many tasks much easier, such as deleting a song from large playlist, liking all songs in a playlist, listing all songs in a playlist, deleting all songs by an artist from a playlist, deleting/adding a list of songs, deleting songs with partially matching song titles, etc.**
+**I used that API to create this program, which allows managing your YoutubeMusic library (see full list of options below).  I mostly use this app now to manage my playlists.  It makes many tasks much easier, such as deleting a song from large playlist, liking all songs in a playlist, listing all songs in a playlist, deleting all songs by an artist from a playlist, deleting/adding a list of songs, deleting songs with partially matching song titles, etc.**
 
 ## Requirements
 ### Requires file "headers_auth.json" in program folder.  It contains some headers including your session cookie.
