@@ -5,9 +5,9 @@ The Youtubemusic GUI doesn't work for such large playlists.  Luckily, I found a 
 
 This program allows managing your music library (see full list of options below).  I mostly use this app now to manage my playlists.  It makes many tasks much easier, such as deleting a song from large playlist, liking all songs in a playlist, listing all songs in a playlist, deleting all songs by an artist from a playlist, deleting/adding a list of songs, deleting songs with partially matching song titles, etc.**
 
-***NOTE:* Requires file "headers_auth.json" in program folder.  It contains some headers including your
-session cookie.  Format:**
-
+## Requirements
+### Requires file "headers_auth.json" in program folder.  It contains some headers including your session cookie.
+***Format:*** 
 `
 {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
@@ -19,6 +19,14 @@ session cookie.  Format:**
     "Cookie" : "<PASTE YOUR COOKIE HERE>"
 }
 `
+### Requires the following Python Modules:
+* ytmusicapi
+* fuzzywuzzy
+* python-Levenshtein
+
+## Installing
+* git clone https://github.com/6161726f6e/EditYoutubeMusicPlaylists.git
+* pip3 install -r requirements.txt
 
 I've implemented functions to work with playlists, and will be adding more functionality later.
 For now, just call the functions from the program.
