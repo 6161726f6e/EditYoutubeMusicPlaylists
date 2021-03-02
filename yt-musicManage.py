@@ -1,15 +1,13 @@
 # Manage YouTube Music Playlists
-# 
-# Supported Operations: add playlist and songs, delete playlist, get list of
-#    playlists, delete song by title from playlist, delete songs by artist from
-#    playlist, get playlistID by name, give like (thumbs up) to songs
 #
-# Requirements: headers_auth.json file with cookie info
+# Requirements: headers_auth.json file with cookie info, Python libraries
+# 	(ytmusicapi, fuzzywuzzy)
 # 
 # Author: Aaron Dhiman
 # Reference: uses this awesome YTMusic API: 
-#     https://ytmusicapi.readthedocs.io/en/latest/index.html
-# To Do: Add Command Line. Add song list to multiple playlists at once.
+# 	https://ytmusicapi.readthedocs.io/en/latest/index.html
+# To Do: Add Command Line. Add song list to multiple playlists at once.  Implement
+#	list for deleting tracks.  Implement fuzzy search for delete tracks by artist.
 ###################################################################################
 
 from ytmusicapi import YTMusic
@@ -45,7 +43,9 @@ def getPlaylistId(plName):
 	#print(myPlaylistsDict[0])
 	#print(myPlaylistsDict["title"])
 	for i in myPlaylistsDict:
-		if i["title"].lower() == plName.lower():
+		fuzzRatio = fuzz.ratio(i["title"].lower(), plName.lower())
+		if fuzzRatio >= 80:
+			print("Found:", i["title"], '- Playlist Name Match Ratio =', fuzzRatio)
 			print("Getting Playlist ID...")
 			print(i["title"], "=",i["playlistId"])
 			print("-------------------------")
@@ -82,12 +82,10 @@ def deleteTrackByTitle(plId, songTitle):
 	for i in playlist["tracks"]:
 		fuzzRatio = fuzz.ratio(i["title"].lower(), songTitle.lower())
 		if fuzzRatio >= 70:
-		#if i["title"].lower() == songTitle.lower():
-			#print(i["videoId"], ": ", i["setVideoId"])
-			print(i["title"].lower(), 'Song Title Match Ratio =', fuzzRatio)
+			print("Found:", i["title"], '- Song Title Match Ratio =', fuzzRatio)
 			videoId=i["videoId"]
 			setVideoId=i["setVideoId"]
-			print("Deleting song ", songTitle)
+			print("Deleting song", i["title"], "by", i["artists"][0]["name"])
 			ytmusic.remove_playlist_items(playlistId=plId, \
 				videos=[i])
 
@@ -173,7 +171,7 @@ def likeAllTracks(pl):
 
 ######## CREATE new Pl or edit existing one
 #pl2edit=samplePl()
-pl2edit=getPlaylistId("pr0Gr4mm1ng")
+#pl2edit=getPlaylistId("proGr4mm1ng")
 #pl2edit=getPlaylistId("H3")
 #pl2edit=getPlaylistId("Classical")
 
@@ -184,11 +182,11 @@ pl2edit=getPlaylistId("pr0Gr4mm1ng")
 #addAlbumToPl(pl2edit,"Alchemy Willaris. K")
 
 ######## ADD tracks to PL
-#addTracks(pl2edit, ["gili meno xinobi"])
+#addTracks(pl2edit, ["Omen prodigy"])
 
 ######## DELETE tracks from PL
 #deleteTracksByArtist(pl2edit, "dual core")
-deleteTrackByTitle(pl2edit, "lost in mind volen sentir")
+#deleteTrackByTitle(pl2edit, "street punks")
 
 ######## DELETE entire PL
 #deletePl(pl2edit)
