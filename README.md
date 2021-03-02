@@ -1,13 +1,18 @@
 # EditYoutubeMusicPlaylists
-**I recently had to clean up a huge playlist (with over 4,000 songs in it).
+**I recently had to clean up a huge playlist (with over 4,000 songs in it).**
 
-The Youtubemusic GUI doesn't work for such large playlists.  Luckily, I found a cool API for it (https://github.com/sigma67/ytmusicapi).  
+**The Youtubemusic GUI doesn't work for such large playlists.  Luckily, I found a cool API for it (https://github.com/sigma67/ytmusicapi).**
 
 This program allows managing your music library (see full list of options below).  I mostly use this app now to manage my playlists.  It makes many tasks much easier, such as deleting a song from large playlist, liking all songs in a playlist, listing all songs in a playlist, deleting all songs by an artist from a playlist, deleting/adding a list of songs, auto-liking songs when adding them to a playlist, deleting songs with partially matching song titles, etc.**
 
 ***NOTE:* Requires file "headers_auth.json" in program folder.  It contains some headers including your
 session cookie.  Format:**
+=======
+**I used that API to create this program, which allows managing your YoutubeMusic library (see full list of options below).  I mostly use this app now to manage my playlists.  It makes many tasks much easier, such as deleting a song from large playlist, liking all songs in a playlist, listing all songs in a playlist, deleting all songs by an artist from a playlist, deleting/adding a list of songs, deleting songs with partially matching song titles, etc.**
 
+## Requirements
+### Requires file "headers_auth.json" in program folder.  It contains some headers including your session cookie.
+***Format:*** 
 `
 {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
@@ -19,7 +24,16 @@ session cookie.  Format:**
     "Cookie" : "<PASTE YOUR COOKIE HERE>"
 }
 `
+### Requires the following Python Modules:
+* ytmusicapi
+* fuzzywuzzy
+* python-Levenshtein
 
+## Installing
+* git clone https://github.com/6161726f6e/EditYoutubeMusicPlaylists.git
+* pip3 install -r requirements.txt
+
+## Features
 I've implemented functions to work with playlists, and will be adding more functionality later.
 For now, just call the functions from the program.
 
