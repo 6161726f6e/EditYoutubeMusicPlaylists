@@ -6,8 +6,8 @@
 # Author: Aaron Dhiman
 # Reference: uses this awesome YTMusic API: 
 # 	https://ytmusicapi.readthedocs.io/en/latest/index.html
-# To Do: Add Command Line. Add song list to multiple playlists at once.  Implement
-#	list for deleting tracks.  Implement fuzzy search for delete tracks by artist.
+# To Do: Add Command Line. Add song list to multiple playlists at once.  
+#        Implement fuzzy search for delete tracks by artist.
 ###################################################################################
 
 from ytmusicapi import YTMusic
@@ -76,18 +76,19 @@ def deletePl(plId):
 	print("Deleting playlist with ID", plId)
 	ytmusic.delete_playlist(plId)
 
-def deleteTrackByTitle(plId, songTitle):
+def deleteTracksByTitle(plId, songTitles):
 # pass in playlistID and songTitle to delete
 	playlist=ytmusic.get_playlist(playlistId=plId, limit=6000)
-	for i in playlist["tracks"]:
-		fuzzRatio = fuzz.ratio(i["title"].lower(), songTitle.lower())
-		if fuzzRatio >= 70:
-			print("Found:", i["title"], '- Song Title Match Ratio =', fuzzRatio)
-			videoId=i["videoId"]
-			setVideoId=i["setVideoId"]
-			print("Deleting song", i["title"], "by", i["artists"][0]["name"])
-			ytmusic.remove_playlist_items(playlistId=plId, \
-				videos=[i])
+	for s in songTitles:
+		for i in playlist["tracks"]:
+			fuzzRatio = fuzz.ratio(i["title"].lower(), s.lower())
+			if fuzzRatio >= 70:
+				print("Found:", i["title"], '- Song Title Match Ratio =', fuzzRatio)
+				videoId=i["videoId"]
+				setVideoId=i["setVideoId"]
+				print("Deleting song", i["title"], "by", i["artists"][0]["name"])
+				ytmusic.remove_playlist_items(playlistId=plId, \
+					videos=[i])
 
 def deleteTracksByArtist(plId, artistName):
 # pass in playlistID and Artist Name to delete.
@@ -173,27 +174,27 @@ def likeAllTracks(pl):
 #pl2edit=samplePl()
 #pl2edit=getPlaylistId("proGr4mm1ng")
 #pl2edit=getPlaylistId("H3")
-#pl2edit=getPlaylistId("Classical")
+#pl2edit=getPlaylistId("cmptr")
 
 ######## ADD entire public PL to your library PL
-#addPl2Pl("Stay Low and Build","H3")
+addPl2Pl("electronic bliss","cmptr")
 
 ######## ADD entire album to PL
 #addAlbumToPl(pl2edit,"Alchemy Willaris. K")
 
 ######## ADD tracks to PL
-#addTracks(pl2edit, ["Omen prodigy"])
+#addTracks(pl2edit, ["another world gojira"])
 
 ######## DELETE tracks from PL
 #deleteTracksByArtist(pl2edit, "dual core")
-#deleteTrackByTitle(pl2edit, "street punks")
+#deleteTracksByTitle(pl2edit, ["Turn The Page","grave"])
 
 ######## DELETE entire PL
 #deletePl(pl2edit)
 
 ######## LIKE Tracks
 #likeTracks(["Liam eric prydz"])
-#likeAllTracks("syn7h")
+#likeAllTracks("rush")
 
 ######## GET Playlist Tracks
 #getPlaylistTracks("pr0Gr4mm1ng")

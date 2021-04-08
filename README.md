@@ -57,8 +57,8 @@ pass in playlistId and album search string to add all songs from that album to a
 add all songs from a public source playlist to your library playlist.
 pass in args as strings.
 
-* function "deleteTrackByTitle(plId, songTitle)" - 
-pass in playlistID and songTitle to delete.
+* function "deleteTracksByTitle(plId, songTitles)" - 
+pass in playlistID and songTitles list to delete.
 
 * function "deleteTracksByArtist(plId, artistName)" - 
 pass in playlistID and Artist Name to delete.
